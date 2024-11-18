@@ -6,7 +6,6 @@ class Player {
     this.radius = radius;
     this.color = color;
   }
-  
 }
 
-export default Player;
+module.exports = Player;
