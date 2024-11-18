@@ -17,6 +17,7 @@ let foods = {};
 
 const WIDTH = 800;
 const HEIGHT = 600;
+const MAX_FOOD = 100;
 
 let foodId = 0;
 let initialRadius = 50;
@@ -30,18 +31,18 @@ function createFood(x, y) {
   foods[id] = food;
 }
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < MAX_FOOD; i++) {
   let x = Math.floor(Math.random() * WIDTH);
   let y = Math.floor(Math.random() * HEIGHT);
   createFood(x, y);
 }
 
-function checkCollision(a, b) {
+const checkCollision = (a, b) => {
   const distance = Math.sqrt((a.x - b.x) ** 2 + (a.y - b.y) ** 2);
   return distance < a.radius + b.radius;
-}
+};
 
-function handlePlayerFoodCollision(player, food) {
+const handlePlayerFoodCollision = (player, food) => {
   if (checkCollision(player, food)) {
     player.radius += 1;
 
@@ -49,9 +50,9 @@ function handlePlayerFoodCollision(player, food) {
 
     foods[uuidv4()] = new Food();
   }
-}
+};
 
-function handlePlayerPlayerCollision(player, o_player) {
+const handlePlayerPlayerCollision = (player, o_player) => {
   if (checkCollision(player, o_player)) {
     if (player.radius > o_player.radius) {
       player.radius += o_player.radius;
@@ -61,7 +62,7 @@ function handlePlayerPlayerCollision(player, o_player) {
       delete players[player.id];
     }
   }
-}
+};
 
 io.on("connection", (socket) => {
   console.log("New client connected");
